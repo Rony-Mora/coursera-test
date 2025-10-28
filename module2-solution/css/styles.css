@@ -1,0 +1,127 @@
+/* styles.css - corrected solution using floats and specified breakpoints
+   Comments show which instruction is being addressed.
+*/
+
+/* Instruction 13: Use border-box so padding/border included in width */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Basic typography and spacing (Instruction 15 optional) */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  color: #222;
+  background: #fafafa;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-header {
+  text-align: center;
+  padding: 24px 16px;
+}
+.page-header h1 {
+  font-size: 2.5rem; /* heading ~75% larger than base text */
+  margin: 0;
+}
+
+/* Container: central alignment and horizontal spacing (Instruction 13) */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px; /* horizontal spacing between browser edge and sections */
+  overflow: hidden; /* contains floats */
+}
+
+/* Base panel styles (Instruction 2, 14) */
+.panel {
+  position: relative; /* necessary for absolutely positioned title (Instruction 12) */
+  border: 1px solid #000; /* 1px black border around each paragraph/section (Instruction 14) */
+  background: #fffbe6; /* same background for all three sections (Instruction: background same) */
+  padding: 48px 20px 20px 20px; /* padding-top leaves space so content doesn't overlap title (Instruction 13) */
+  margin-bottom: 20px; /* vertical spacing */
+  min-height: 160px;
+  float: left; /* Layout requirement: use float for desktop (Instruction 9) */
+}
+
+/* Section title region (Instruction 12 & 14) */
+.panel-title {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 2px 6px;
+  border: 1px solid #000; /* black border for title region (Instruction 14) */
+  font-weight: 700;
+  font-size: 1.25rem; /* ~25% larger than dummy text (Instruction 15 optional) */
+  text-align: right;   /* align text to the right inside the title box */
+  background-color: #fff; /* optional to keep visible title above ground */
+}
+
+/* Unique title background colors (Instruction 14) */
+.chicken .panel-title { background: #ffd180; color: #000; } /* orange */
+.beef .panel-title    { background: #ffab91; color: #000; } /* light red */
+.sushi .panel-title   { background: #b9f6ca; color: #000; } /* light green */
+
+/* Panel body text spacing */
+.panel-body p {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 1rem; /* base text size */
+}
+
+/* === Layout: Desktop (Instruction 7 & 9) === */
+/* Desktop: width >= 992px -> three equal columns. Use percentages + margin-right spacing */
+@media (min-width: 992px) {
+  .panel {
+    width: calc((100% - 40px) / 3); /* subtract two gaps of 20px then divide */
+    margin-right: 20px;
+  }
+  /* Remove right margin for last column to keep edges consistent */
+  .panel:nth-of-type(3) { margin-right: 0; }
+}
+
+/* === Layout: Tablet (Instruction 7 & 10) === */
+/* 768px to 991px inclusive: first two in first row, third full width below */
+@media (min-width: 768px) and (max-width: 991px) {
+  .panel {
+    float: left; /*Chicken and Beef one aside the other one*/
+    width: calc(50% - 10px); /* two columns */
+    margin: 10px 5px; /* correct space around */
+  }
+  /* Third panel spans full width and clears floats to go on second row */
+  .panel:nth-child(3) {
+    width: 100%;
+    clear: both;
+  }
+}
+
+/* === Layout: Mobile (Instruction 7 & 11) === */
+/* <= 767px: each section full width stacked vertically */
+@media (max-width: 767px) {
+  .panel {
+    width: 100% !important;
+    margin-right: 0;
+    float: none; /* remove float so they stack */
+    padding: 48px 16px 16px 16px; /* keep space for text */
+    position: relative; /* keep title in the border */
+  }
+  .panel-title {
+    top: 0px; /* stay at top border */
+    right: 0px; /* stay at right border */
+    font-size: 1.05rem;
+  }
+}
+
+/* Clearfix utility (Instruction 6) */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Footer styling */
+.page-footer {
+  text-align: center;
+  padding: 16px;
+  color: #555;
+}
